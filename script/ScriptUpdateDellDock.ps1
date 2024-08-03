@@ -157,7 +157,7 @@ function OtherComputer {
 
     if ($null -ne $FindDock)
     {
-        Write-Host "Aucune base WD19 connecte"
+        Write-Host "Aucune base WD19/WD22 series connecte"
     }
     else
     {
