@@ -161,7 +161,7 @@ function OtherComputer {
     }
     else
     {
-        Write-Host "Base WD19 detecte"
+        Write-Host "Base WD19/WD22 series detecte"
         Write-Host "Detection de la version en cours..."
         $FindVersion = Select-String -Path C:\Temp\DellDockUpdate\componentsvers.txt -Pattern $CibleWD19
         $FindBaseModel = Select-String -Path C:\Temp\DellDockUpdate\componentsvers.txt -Pattern "Dock Type"

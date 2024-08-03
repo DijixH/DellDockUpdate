@@ -2,6 +2,8 @@
 
 Lancer le raccourcis "MAJ Dell Dock", il exécute en administrateur le script de mise à jour des bases Dell.
 
+## Pour les PC Dell
+
 1. Installation de Dell Command Monitor 
 
 Le script vérifie si l'utilitaire est présent sur le poste, si oui une erreur est retourné sinon une installation silencieuse démarre.
@@ -21,10 +23,24 @@ Il désinstalle le DellWrapper qui est à usage unique et ne peut être relancé
 Des logs sont disponible à l'emplacement du script.
 Si la base est à jour le script retourne qu'elle l'est.
 
+## Pour les autres marques de PC
+
+1. Test de la présence d'une base Dell WD19/WD22 series
+
+Le script lance une vérification de la version des composants de la base connecté via le package d'installation sans lancer d'installation. Si aucune base est connecté le script l'indique et s'arrête. 
+
+2. Mise à jour des bases Dell
+
+Si une base est connecté elle indique le modèle, le service tag et la version présente sur la base. Un test de la présence de la dernière version s'effectue alors, si la version n'est pas la bonne la mise à jour est lancé, sinon le script indique que la base est à jour et s'arrête.
+
+## Logs
+
+Le script log tout son déroulement dans le répertoire "logs".
+
 ## Contraintes connues
 
-- Le script n'est compatible qu'avec les PC Dell en raison de la nécessité d'un BIOS Dell pour la remonté d'information des équipements connectés au PC
+- Pour les bases Dell WD15 : Le script n'est compatible qu'avec les PC Dell en raison de la nécessité d'un BIOS Dell pour la remonté d'information des équipements connectés au PC ainsi que pour le lancement de l'utilitaire de MAJ des WD15 qui n'est compatible qu'avec les postes Dell.
 
 ## Problèmes connues
 
-- Si deux modèles de bases différents (WD15 puis WD19X) sont mis à jour avec le même poste dans un délai inferieur à 2 minutes le script temporisera la maj avec le message "Attente de connexion d'une base..." même si la base est connecté. Il faudra soit attendre et relancer le script, soit attendre 5 minutes que la fonction de temporisation du script relance un check. La cause est que le module DSIA ne met pas à jour instantanéement les informations du poste à l'inverse du Dell Command Monitor.  
+- Si deux modèles de bases différents (WD15 puis WD19X) sont mis à jour avec le même poste Dell dans un délai inferieur à 2 minutes le script temporisera la maj avec le message "Attente de connexion d'une base..." même si la base est connecté. Il faudra soit attendre et relancer le script, soit attendre 5 minutes que la fonction de temporisation du script relance un check. La cause est que le module DSIA ne met pas à jour instantanéement les informations du poste à l'inverse du Dell Command Monitor. 
