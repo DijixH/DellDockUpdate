@@ -163,7 +163,11 @@ function OtherComputer {
     {
         Write-Host "Base WD19 detecte"
         Write-Host "Detection de la version en cours..."
-        $FindVersion = Select-String -Path C:\Temp\DellDockUpdate\detectWD19.txt -Pattern $CibleWD19
+        $FindVersion = Select-String -Path C:\Temp\DellDockUpdate\componentsvers.txt -Pattern $CibleWD19
+        $FindBaseModel = Select-String -Path C:\Temp\DellDockUpdate\componentsvers.txt -Pattern "Dock Type"
+        $FindServiceTag = Select-String -Path C:\Temp\DellDockUpdate\componentsvers.txt -Pattern "Service Tag"
+        $FindFirmware = Select-String -Path C:\Temp\DellDockUpdate\componentsvers.txt -Pattern "Package Version"
+        Write-Host "Modele detecte : `n "$FindBaseModel.line" `n "$FindServiceTag.line" `n Version en cours : `n "$FindFirmware.line
         if ($null -ne $FindVersion) {
             Write-Host "Base a jour"
         }
@@ -174,6 +178,7 @@ function OtherComputer {
         }
     }
     Remove-Item C:\Temp\DellDockUpdate\detectWD19.txt
+    Remove-Item C:\Temp\DellDockUpdate\componentsvers.txt
 }
 ###########################################################
 
@@ -184,6 +189,8 @@ function OtherComputer {
 #Requires -RunAsAdministrator
 
 Start-Transcript -Path C:\Temp\DellDockUpdate\logs\log_$ComputerName-$((Get-Date).ToString('ddMMyyyy-HHmmss')).log -Verbose
+
+Set-Location -Path C:\Temp\DellDockUpdate
 
 if ("Dell Inc." -eq $Fabricant) {
     Write-Host "Ordinateur $Fabricant"
