@@ -44,3 +44,43 @@ Le script log tout son déroulement dans le répertoire "logs".
 ## Problèmes connues
 
 - Si deux modèles de bases différents (WD15 puis WD19X) sont mis à jour avec le même poste Dell dans un délai inferieur à 2 minutes le script temporisera la maj avec le message "Attente de connexion d'une base..." même si la base est connecté. Il faudra soit attendre et relancer le script, soit attendre 5 minutes que la fonction de temporisation du script relance un check. La cause est que le module DSIA ne met pas à jour instantanéement les informations du poste à l'inverse du Dell Command Monitor. 
+
+# Dell Dock Base Updates
+
+Launch the "Dell Dock Update" shortcut; it runs the Dell base update script with administrator privileges.
+
+## For Dell PCs
+
+1. Dell Command Monitor Installation
+
+The script checks if the utility is present on the computer. If it is, an error is returned; otherwise, a silent installation begins. The utility provides additional classes for information about Dell products, including warranty status and connected peripherals (among other details).
+
+2. Dell DSIA Installation
+
+This step and function are identical to the Dell Command Monitor. It provides hardware information for older Dell devices.
+
+3. Dell Base Updates
+
+After querying the classes related to Dell bases (if possible) to target computers with a Dell base, the script checks if a Dell station is connected. If not, the script waits and rechecks every five minutes. If a base is connected, the script silently updates the base. If the base is disconnected between detection and update launch, the DellWrapper utility can delay the update until the next connection to a Dell base. The script waits for the process to finish before confirming the update. It uninstalls the DellWrapper, which is single-use and cannot be relaunched. Logs are available in the script's location. If the base is up-to-date, the script indicates so.
+
+## For other PC brands
+
+1. Testing for Dell WD19/WD22 Series Base Presence
+
+The script checks the version of components connected to the base using the installation package without launching an installation. If no base is connected, the script indicates this and stops.
+
+2. Dell Base Updates
+
+If a base is connected, it provides the model, service tag, and current version. It then tests for the presence of the latest version. If the version is incorrect, the update is launched; otherwise, the script indicates that the base is up-to-date and stops.
+
+## Logs
+
+The script logs its entire process in the "logs" directory.
+
+## Known Constraints
+
+- For Dell WD15 bases: The script is only compatible with Dell PCs due to the need for a Dell BIOS to retrieve information about connected equipment and to launch the WD15 update utility, which is only compatible with Dell computers.
+
+## Known Issues
+
+- If two different base models (WD15 and WD19X) are updated on the same Dell computer within less than 2 minutes, the script will delay the update with the message "Waiting for base connection..." even if the base is connected. You can either wait and relaunch the script or wait 5 minutes for the script's built-in delay function to recheck. This issue occurs because the DSIA module does not instantly update the computer's information, unlike the Dell Command Monitor.
